@@ -1,0 +1,105 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors" />
+    <meta name="generator" content="Hugo 0.122.0" />
+    <title>Login</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/stylesheet.css' %}" rel="stylesheet" />
+
+    <style>
+      /* Gambar latar belakang */
+      body {
+        background-image: url('{% static "img/gambar_login.jpeg" %}');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        height: 100vh;
+         /* Fallback warna hijau */
+        color: white; /* Warna teks agar kontras dengan background */
+      }
+
+      .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .login-form {
+        background-color: rgba(190, 90, 90, 0.8); /* Transparansi pada form */
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .login-form h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .btn-custom {
+        width: 100%;
+        background-color: #007bff;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        color: rgb(3, 1, 1);
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn-custom:hover {
+        background-color: #0c61bb;
+      }
+
+      .form-control {
+        border-radius: 5px;
+      }
+
+      /* Responsif untuk perangkat mobile */
+      @media (max-width: 768px) {
+        .login-form {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    {% include 'navbar.html' %}
+    
+    {% block content %}
+    {% if user.is_authenticated %}
+      <p>You are already logged in!</p>
+    {% else %}
+    <div class="login-container">
+      <div class="login-form">
+        <h1>Login</h1>
+        <form method="POST" action="{% url 'login' %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <input type="text" class="form-control" name="username" placeholder="Enter Your Username" required />
+          </div>
+          <div class="mb-3">
+            <input type="password" class="form-control" name="password" placeholder="Enter Your Password" required />
+          </div>
+          <button type="submit" class="btn-custom">Submit</button>
+        </form>
+      </div>
+    </div>
+    {% endif %}
+    {% endblock %}
+
+    <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  </body>
+</html>
